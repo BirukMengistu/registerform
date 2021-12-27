@@ -233,3 +233,19 @@ a.social:hover {
     background: linear-gradient(to right, #ff4b2b, #ff416c);
     color: #fff;
 }
+
+.userList{
+  text-decoration: none;
+}
+.formcheck{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    font-size: 0.8rem;
+   
+}
+.formcheck input{
+   
+    width: 2rem;
+    height: 1rem;
+}

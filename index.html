@@ -24,12 +24,19 @@
             <form id ='regForm' >
                 <h3>Registral Form</h3>
                 
-                    <input  class ='form-group' type="text" name ='firstname' id ='firstname' placeholder="Firstname">   
-               
-                    <input  class ='form-group' type="text" name = 'surename' id = 'surename' placeholder="Surname">  
-              
-                    <input class ='form-group' id = 'email'name = 'email' type="email" placeholder="Email">  
-             
+                    <input  class ='is-invalid' type="text" name ='firstname' id ='firstname' placeholder="Firstname">   
+                    <div class="invalid-feedback">
+                        Please enter valid firstname.
+                    </div>
+                    <input  class ='is-invalid' type="text" name = 'surename' id = 'surename' placeholder="Surname">  
+                    <div class="invalid-feedback">
+                        Please enter valid surename .
+                    </div>
+                    
+                    <input class ='is-invalid' id = 'email' name = 'email' type="email" placeholder="Email">  
+                    <div class="invalid-feedback">
+                        Please enter valid email .
+                    </div>
                
                     <select name="gender" class ='form-group' id="gender" >
                         <option value="" disabled selected>Select your gender</option>
@@ -37,8 +44,11 @@
                         <option value="male">Male</option>
                         <option value="both">Both</option>
                       </select>   
-             
-               
+                      <div class="formcheck">
+                        <input type ='checkbox' value="" id="frmchk"/>
+                        <label  for="tac">I accept the user terms and conditions.</label>
+                      </div>
+                      
             
                 <button type="submit" class='btn btn-sign-up sign-up'>Sign Up</button>
             </form>
