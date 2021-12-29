@@ -4,9 +4,13 @@
  
   
 const regButton = document.querySelector('.sign-up');
-const regFrm = document.querySelector('#regForm');
+const updateButton = document.querySelector('#update-info');
+const regFrm = document.querySelector('#regContainer1');
+const regFrmEdit= document.querySelector('#regContainer2')
 const firstName = document.querySelector('#firstname');
 const sureName = document.querySelector('#surename');
+const Gender = document.querySelector('#gender');
+
 const email = document.querySelector('#email');
 const userName = document.querySelector('.user-name')
 const formCheck = document.querySelector('#frmchk')
@@ -46,7 +50,7 @@ regButton.addEventListener('click', function(e) {
       firstname: firstName.value,
       surename: sureName.value,
       email: email.value,
-      gender: e.target.gender
+      gender: gender.value
     } 
      userName.innerHTML= `<h4>${firstName.value} welcome our city!</h4>`
      users.push(user) 
@@ -152,14 +156,46 @@ const validateCheckbox =()=>{
 
 
 
-
+function editUserInfo(user) {
+  
+  
+  
+  regFrm.style.display='none'
+  console.log(regFrmEdit)
+  regFrmEdit.style.display='block'
+  const firstName = document.querySelector('#firstnameedit');
+  const sureName = document.querySelector('#surenameedit');
+  const email = document.querySelector('#emailedit');
+  firstName.value=user.firstname
+  sureName.value = user.surename
+  email.value = user.email
+    updateButton.addEventListener('click', (e)=>{
+    e.preventDefault()
+    
+       console.log(user.userid)
+    
+        user.firstname = firstName.value
+        user.surename =  sureName.value
+        user.email = email.value 
+    
+      
+  
+   
+    regFrmEdit.style.display='none'
+    regFrm.style.display='block'
+    listUsers()
+   
+  }) 
+ 
+  
+  console.log(user);
+}
 
 
 
 const removeUser = (user) => {
     
     console.log(user.userid)
-    
     users = users.filter( _user => _user.userid!== user.userid)
     console.log(users)
     listUsers();
@@ -177,17 +213,21 @@ const newUser = (userObject) => {
   innerCard.classList.add('d-flex', 'justify-content-between', 'align-items-center');
 
   let userInfo = document.createElement('h6');
-  userInfo.classList.add('mb-1' , 'text-info');
+  userInfo.classList.add('text-info' , 'text-wrap' ,'text-capitalize' ,);
 
   userInfo.innerText = `${userObject.firstname}  ${userObject.surename} \n
                          ${userObject.email}`;
-   let editButtons = document.createElement('div');
+  
+  let buttonCard =document.createElement('div');
+  buttonCard.classList.add('d-flex', 'justify-content-between', 'align-items-center')
+  let editButtons = document.createElement('div');
   let  editBtn= document.createElement('button');
-  editBtn.classList.add('btn', 'btn-info', 'btn-sm');
+  editBtn.classList.add('btn','btn-info','btn-floating','btn-sm');
   editBtn.innerHTML='<i class="fa fa-edit"></i>';
-  editBtn.addEventListener('click', () => removeUser(userObject));
+  editBtn.addEventListener('click', () => editUserInfo(userObject));
                       
-                         
+   
+  
                          
   let deleteButtons = document.createElement('div');
 
@@ -201,8 +241,9 @@ const newUser = (userObject) => {
   deleteButtons.appendChild(deleteBtn);
   editButtons.appendChild(editBtn);
   innerCard.appendChild(userInfo);
-  innerCard.appendChild(editButtons);
-  innerCard.appendChild(deleteButtons);
+  buttonCard.appendChild(editButtons)
+  buttonCard.appendChild(deleteButtons)
+  innerCard.appendChild(buttonCard);
   card.appendChild(innerCard);
   output.appendChild(card);
 
