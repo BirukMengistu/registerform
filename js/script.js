@@ -1,3 +1,8 @@
+
+
+
+ 
+  
 const regButton = document.querySelector('.sign-up');
 const regFrm = document.querySelector('#regForm');
 const firstName = document.querySelector('#firstname');
@@ -5,7 +10,14 @@ const sureName = document.querySelector('#surename');
 const email = document.querySelector('#email');
 const userName = document.querySelector('.user-name')
 const formCheck = document.querySelector('#frmchk')
-const users = new Array()
+
+let users = [];
+const listUsers = () => {
+  output.innerHTML = '';
+  users.forEach(user => {
+     newUser(user);
+  })
+}
 
 
 regButton.addEventListener('click', function(e) {
@@ -25,9 +37,9 @@ regButton.addEventListener('click', function(e) {
    validateInput=false
  }
   if(valdateInput){
-    var number = Math.random() // 0.9394456857981651
-    number.toString(36); // '0.xtis06h6'
-    var id = number.toString(36).substr(2, 9); // 'xtis06h6'
+    var number = Math.random()
+    number.toString(36); 
+    var id = number.toString(36).substr(2, 9); 
     id.length >= 9; // false
     let user = {
       userid: id,
@@ -39,7 +51,8 @@ regButton.addEventListener('click', function(e) {
      userName.innerHTML= `<h4>${firstName.value} welcome our city!</h4>`
      users.push(user) 
      removeRegForm()
-     getUserList(users)
+     newUser(user)
+
     
   }
     
@@ -57,21 +70,36 @@ regFrm.addEventListener('submit', e => {
 }
 )
 
-const getUserList = (userObject) =>{
+ const getUserList = (userObject) =>{
   let userInfo =  '<div><p> Registered User</p></div>' 
   const userlist = document.querySelector('.userList')
-  // let useListContainer = document.createElement('div')
-  // getUserList.addClass('list-user')
+
   userInfo += '<table class="table table-striped"> <tr> <th>User Id</th><th>Name</th> <th>email</th></tr>' 
-    userObject.forEach(
-      user => {
-        userInfo +=  `<tr> <td>${user.userid}</td> <td>${user.firstname}</td> <td>${user.email}</td></tr>`    
-      }
+     userObject.forEach(
+     /*  user => {
+        
+        userInfo +=  ` <tr> 
+                           <td>${user.userid}</td> 
+                           <td>${user.firstname}</td>
+                           <td><span>${user.email}</span></td>
+                           <td> 
+                               <i  type="button" class="fas fa-edit" id='btnupdates'></i>
+                            </td>
+                           <td><i type="button" name=${user.userid} id='btndels' class="fa fa-trash"></i></td>
+                           </tr>`    
+      } */
+  
+    ) 
     
-    )
-    userInfo += '<table/>'
+    userInfo += '<table/>' 
+  
     userlist.innerHTML  = userInfo
+    var btnDelete = document.querySelectorAll('#btndels')
+    var btnUpdate = document.querySelectorAll('#btnupdates')
+    deleteUser(btnDelete)
+     
 }
+
 /* function clear or input value  */
 const removeRegForm =()=>{
   firstName.value = ''
@@ -120,4 +148,62 @@ const validateCheckbox =()=>{
       alert('You must agree to the terms first.');
       return false;
   }
+}
+
+
+
+
+
+
+
+const removeUser = (user) => {
+    
+    console.log(user.userid)
+    
+    users = users.filter( _user => _user.userid!== user.userid)
+    console.log(users)
+    listUsers();
+}
+
+  
+
+
+const newUser = (userObject) => {
+
+  let card = document.createElement('div');
+  card.classList.add('card', 'p-1', 'my-1');
+
+  let innerCard = document.createElement('div');
+  innerCard.classList.add('d-flex', 'justify-content-between', 'align-items-center');
+
+  let userInfo = document.createElement('h6');
+  userInfo.classList.add('mb-1' , 'text-info');
+
+  userInfo.innerText = `${userObject.firstname}  ${userObject.surename} \n
+                         ${userObject.email}`;
+   let editButtons = document.createElement('div');
+  let  editBtn= document.createElement('button');
+  editBtn.classList.add('btn', 'btn-info', 'btn-sm');
+  editBtn.innerHTML='<i class="fa fa-edit"></i>';
+  editBtn.addEventListener('click', () => removeUser(userObject));
+                      
+                         
+                         
+  let deleteButtons = document.createElement('div');
+
+  let deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm');
+  deleteBtn.innerHTML='<i class="fa fa-trash"></i>';
+  deleteBtn.addEventListener('click', () => removeUser(userObject));
+   
+
+
+  deleteButtons.appendChild(deleteBtn);
+  editButtons.appendChild(editBtn);
+  innerCard.appendChild(userInfo);
+  innerCard.appendChild(editButtons);
+  innerCard.appendChild(deleteButtons);
+  card.appendChild(innerCard);
+  output.appendChild(card);
+
 }
