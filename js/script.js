@@ -174,12 +174,21 @@ function editUserInfo(user) {
     
        console.log(user.userid)
     
-        user.firstname = firstName.value
-        user.surename =  sureName.value
-        user.email = email.value 
-    
       
+        console.log(user)
+        //var result = foo.map(el => el.bar == 1 ? {...el, baz: [11,22,33]} : el);
+        users.map((_user)=>{ 
+          //onsole.log(_user.userid ===user.userid)
+                  if( _user.userid === user.userid){
+                    _user.firstname = firstName.value;
+                    _user.surename =  sureName.value;
+                   _user.email = email.value ;
   
+                  }
+                  else
+                 return true
+                  
+                })
    
     regFrmEdit.style.display='none'
     regFrm.style.display='block'
