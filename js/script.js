@@ -16,6 +16,7 @@ const userName = document.querySelector('.user-name')
 const formCheck = document.querySelector('#frmchk')
 
 let users = [];
+//list users
 const listUsers = () => {
   output.innerHTML = '';
   users.forEach(user => {
@@ -74,35 +75,7 @@ regFrm.addEventListener('submit', e => {
 }
 )
 
- const getUserList = (userObject) =>{
-  let userInfo =  '<div><p> Registered User</p></div>' 
-  const userlist = document.querySelector('.userList')
 
-  userInfo += '<table class="table table-striped"> <tr> <th>User Id</th><th>Name</th> <th>email</th></tr>' 
-     userObject.forEach(
-     /*  user => {
-        
-        userInfo +=  ` <tr> 
-                           <td>${user.userid}</td> 
-                           <td>${user.firstname}</td>
-                           <td><span>${user.email}</span></td>
-                           <td> 
-                               <i  type="button" class="fas fa-edit" id='btnupdates'></i>
-                            </td>
-                           <td><i type="button" name=${user.userid} id='btndels' class="fa fa-trash"></i></td>
-                           </tr>`    
-      } */
-  
-    ) 
-    
-    userInfo += '<table/>' 
-  
-    userlist.innerHTML  = userInfo
-    var btnDelete = document.querySelectorAll('#btndels')
-    var btnUpdate = document.querySelectorAll('#btnupdates')
-    deleteUser(btnDelete)
-     
-}
 
 /* function clear or input value  */
 const removeRegForm =()=>{
@@ -145,7 +118,7 @@ const validateEmail = (emailInput) => {
     return false;
   }
 }
-
+//form validation
 const validateCheckbox =()=>{
   if(!formCheck.checked)
   {
@@ -155,11 +128,8 @@ const validateCheckbox =()=>{
 }
 
 
-
+// edit function 
 function editUserInfo(user) {
-  
-  
-  
   regFrm.style.display='none'
   console.log(regFrmEdit)
   regFrmEdit.style.display='block'
@@ -174,12 +144,21 @@ function editUserInfo(user) {
     
        console.log(user.userid)
     
-        user.firstname = firstName.value
-        user.surename =  sureName.value
-        user.email = email.value 
-    
       
+        console.log(user)
+        //var result = foo.map(el => el.bar == 1 ? {...el, baz: [11,22,33]} : el);
+        users.map((_user)=>{ 
+          //onsole.log(_user.userid ===user.userid)
+                  if( _user.userid === user.userid){
+                    _user.firstname = firstName.value;
+                    _user.surename =  sureName.value;
+                   _user.email = email.value ;
   
+                  }
+                  else
+                 return true
+                  
+                })
    
     regFrmEdit.style.display='none'
     regFrm.style.display='block'
@@ -192,7 +171,7 @@ function editUserInfo(user) {
 }
 
 
-
+// delete user record from the list.
 const removeUser = (user) => {
     
     console.log(user.userid)
@@ -203,7 +182,7 @@ const removeUser = (user) => {
 
   
 
-
+// add new user function
 const newUser = (userObject) => {
 
   let card = document.createElement('div');
